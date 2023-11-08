@@ -12,18 +12,33 @@ for _ in range(T):
 
     arr = list(list(map(int, input().split())) for _ in range(N))
 
-    arr_first = list(sorted(arr, key=lambda x: x[0]))
-    arr_last = list(sorted(arr, key=lambda x: x[1]))
+    arr_first = list(sorted(arr, key=lambda x: x[0] + x[1]))
 
-    not_passed = []
+    passed = []
 
-    for i in arr_first:
-        for j in range(arr_last.index(i) + 1, N):
-            if arr_first.index(i) > arr_first.index(arr_last[j]):
-                break
-            else:
-                if arr_last[j] not in not_passed:
-                    not_passed.append(arr_last[j])
-    ans.append(N - len(not_passed))
-for _ in ans:
-    print(_)
+    tmp = []
+
+    first = arr_first[0]
+
+    tmp.append(first)
+
+    for i in range(1, N):
+        opponent = arr_first[i]
+
+        if first[0] < opponent[0] and first[1] < opponent[1]:
+            continue
+
+        tmp.append(opponent)
+
+    arr_last = list(sorted(tmp, key=lambda x: x[0] + x[1]))
+
+    first = arr_last[0]
+
+    ans = [first]
+    for i in range(1, len(arr_last)):
+        opponent = arr_last[i]
+        if first[0] < opponent[0] and first[1] < opponent[1]:
+            continue
+        ans.append(opponent)
+
+    print(len(ans))

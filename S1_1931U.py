@@ -1,16 +1,27 @@
-# import sys
+import sys
 
-# input = sys.stdin.readline
+input = sys.stdin.readline
 
-# N = int(input())
-# ans = 0
-# time_table = []
+N = int(input())
 
-# for _ in range(N):
-#     time_table.append(list(map(int, input().split())))
+arr = list(list(map(int, input().split())) for _ in range(N))
 
-# time_table.sort(key=lambda x: x[0])
+arr.sort(key=lambda x: (x[1], x[0] + x[1]))
+index = 0
+cnt = 0
+while True:
+    cnt += 1
+    start = arr[index][0]
+    end = arr[index][1]
 
-# DP = [[] for _ in range(N)]
+    valid = False
+    for i in range(index + 1, N):
+        if arr[i][0] >= end:
+            index = i
+            valid = True
+            break
 
-# 아직 못품
+    if not valid:
+        break
+
+print(cnt)
